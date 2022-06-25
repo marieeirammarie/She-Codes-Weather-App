@@ -49,7 +49,7 @@ function showCurrentStatus(response) {
   let temperature = Math.round(response.data.main.temp);
   let currentTemperature = document.querySelector("#current-temperature");
   //let rainElement = document.querySelector("#current-rain");
-  //let rain = response.data.precipitation.mode;
+  //let rain = Math.round(response.data.precipitation.mode);
   let humidityElement = document.querySelector("#current-humidity");
   let humidity = Math.round(response.data.main.humidity);
   let windElement = document.querySelector("#current-wind");
@@ -76,7 +76,7 @@ navigator.geolocation.getCurrentPosition(loadCurrentStatus);
 
 //Alert Function 2 & 3: Load current location via the form button
 let showHome = document.querySelector("#submit-home");
-searchCity.addEventListener("submit", showCurrentStatus);
+searchCity.addEventListener("submit", loadCurrentStatus);
 
 //Function 6: Connect destination with API
 function showSearchedTemperature(response) {
@@ -98,6 +98,7 @@ function showSearchedTemperature(response) {
 }
 //Function 5: Connect destination with API
 function search(city) {
+  let userCity = document.querySelector("#city-input");
   let apiKey = "3b0dd576d30fcc1cc16ccaf31a91c33f";
   let apiEndpoint = `https://api.openweathermap.org/data/2.5/weather?`;
   let apiUrl = `${apiEndpoint}q=${userCity.value}&appid=${apiKey}&units=metric`;
@@ -133,8 +134,10 @@ function displayCelsius(event) {
 }
 
 //Alert function 4, 5 & 6: Connect typed location with API + Show weather
-let form = document.querySelector("location-search");
-form.addEventListener("submit", submitSearchLocation);
+let searchCity = document.querySelector("#submit-location");
+searchCity.addEventListener("click", submitSearchLocation);
+//let form = document.querySelector("location-search");
+//form.addEventListener("submit", submitSearchLocation);
 
 //Alert function to convert temperature units
 let fahrenheit = document.querySelector("#fahrenheit-link");
