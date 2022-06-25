@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marie Weather App 2.0</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="src/style.css" />
+    <link rel="json" href="src/index.js" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>All you need to know about the weather</h1>
+      <p id="current-time"></p>
+      <div class="borderless">
+        <form id="location-search">
+          <input type="text" id="input-city" placeholder="Take me to..." />
+          <input type="submit" id="submit-location" value="Search" />
+          <input type="submit" id="submit-home" value="Home" />
+        </form>
+      </div>
+      <div class="row borderfull">
+        <div class="col-6">
+          <div id="destination">
+            <h2>Vienna</h2>
+          </div>
+          <div class="weather-emoji">
+            <h2>☀️</h2>
+          </div>
+        </div>
+        <div class="col-6">
+          <span id="current-temperature">XX</span>
+          <a href="#" id="celsius" class="unit active"> °C </a>
+          <span class="unit"> | </span>
+          <a href="#" id="fahrenheit" class="unit active"> °F </a>
+        </div>
+      </div>
+      <div class="row borderfull">
+        <div class="col-4">
+          <div>
+            <h2>Rain</h2>
+          </div>
+          <div>
+            <h2>Humidity</h2>
+          </div>
+          <div>
+            <h2>Wind</h2>
+          </div>
+        </div>
+        <div class="col-4">
+          <div id="current-rain">
+            <h2>XX</h2>
+          </div>
+          <div id="current-humidity">
+            <h2>XX</h2>
+          </div>
+          <div id="current-wind">
+            <h2>XX</h2>
+          </div>
+        </div>
+        <div class="col-4">
+          <div>
+            <h2>%</h2>
+          </div>
+          <div>
+            <h2>%</h2>
+          </div>
+          <div>
+            <h2>km/h</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="roundborder">
+        <h3>What you should wear</h3>
+        <h1 id="style-emoji">🕶</h1>
+      </div>
+      <div class="borderless">
+        <h2>✨ Look into the future ✨</h2>
+      </div>
+      <div class="row borderfull">
+        <div class="col-2 roundborder">
+          <div id="t+1">Mon</div>
+          <h2 id="t+1-emoji">☀️</h2>
+        </div>
+        <div class="col-2 roundborder">
+          <div id="t+2">Tue</div>
+          <h2 id="t+2-emoji">☀️</h2>
+        </div>
+        <div class="col-2 roundborder">
+          <div id="t+3">Wed</div>
+          <h2 id="t+3-emoji">☀️</h2>
+        </div>
+        <div class="col-2 roundborder">
+          <div id="t+4">Thur</div>
+          <h2 id="t+4-emoji">☀️</h2>
+        </div>
+        <div class="col-2 roundborder">
+          <div id="t+5">Fri</div>
+          <h2 id="t+5-emoji">☀️</h2>
+        </div>
+        <div class="col-2 roundborder">
+          <div id="t+6">Sat</div>
+          <h2 id="t+6-emoji">☀️</h2>
+        </div>
+      </div>
+    </div>
+    <small>
+      <a
+        href="https://github.com/marieeirammarie/shecodes-weatherAPP-marie"
+        target="_blank"
+        >Open-source code</a
+      >, by Marie
+    </small>
+    <link rel="json" href="src/index.js" />
+    <script src="src/index.js"></script>
+  </body>
+</html>
