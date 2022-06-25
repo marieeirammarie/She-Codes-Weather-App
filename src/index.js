@@ -111,8 +111,34 @@ function submitSearchLocation(event) {
   search(cityInputElement.value);
 }
 
+let temperature = null;
+
+search("Vienna");
+
+function displayFahrenheit(event) {
+  event.preventDefault();
+  let temperature = document.querySelector("#current-temperature");
+  celsius.classList.add("active");
+  fahrenheit.classList.remove("active");
+  let fahrenheitTemperature = (celsiusTemperature.innerHTML * 9) / 5 + 32;
+  temperature.innerHTML = Math.round(fahrenheitTemperature);
+}
+
+function displayCelsius(event) {
+  event.preventDefault();
+  fahrenheit.classList.add("active");
+  celsius.classList.remove("active");
+  let temperature = document.querySelector("#current-temperature");
+  temperature.innerHTML = Math.round(celsiusTemperature);
+}
+
 //Alert function 4, 5 & 6: Connect typed location with API + Show weather
 let form = document.querySelector("location-search");
 form.addEventListener("submit", submitSearchLocation);
 
-search("Vienna");
+//Alert function to convert temperature units
+let fahrenheit = document.querySelector("#fahrenheit-link");
+fahrenheit.addEventListener("click", displayFahrenheit);
+
+let celsius = document.querySelector("#celsius-link");
+celsius.addEventListener("click", displayCelsius);
