@@ -41,3 +41,39 @@ function loadDate(now) {
 let currentTime = document.querySelector("#current-time");
 let now = new Date();
 currentTime.innerHTML = loadDate(now);
+
+// Function 2: Show current Status (Position & Weather)
+function showCurrentStatus(response) {
+  let location = response.data.name;
+  let cityName = document.querySelector("#destination");
+  let temperature = Math.round(response.data.main.temp);
+  let currentTemperature = document.querySelector("#current-temperature");
+  //let rainElement = document.querySelector("#current-rain");
+  //let rain = response.data.precipitation.mode;
+  let humidityElement = document.querySelector("#current-humidity");
+  let humidity = Math.round(response.data.main.humidity);
+  let windElement = document.querySelector("#current-wind");
+  let wind = Math.round(response.data.wind.speed);
+  cityName.innerHTML = `${location}`;
+  currentTemperature.innerHTML = `${temperature}`;
+  //rainElement.innerHTML = `${rain}`;
+  humidityElement.innerHTML = `${humidity}`;
+  windElement.innerHTML = `${wind}`;
+}
+
+// Function 3: Load current Position & Weather
+function loadCurrentStatus(position) {
+  let latitude = position.coords.latitude;
+  let longitude = position.coords.longitude;
+  let apiKey = "3b0dd576d30fcc1cc16ccaf31a91c33f";
+  let apiEndpoint = `https://api.openweathermap.org/data/2.5/weather?`;
+  let apiUrl = `${apiEndpoint}lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(showCurrentStatus);
+}
+
+// Alert Function 2 & 3: Load current location by re-loading the page
+navigator.geolocation.getCurrentPosition(loadCurrentStatus);
+
+//Alert Function 2 & 3: Load current location via the form button
+let showHome = document.querySelector("#submit-home");
+searchCity.addEventListener("click", showCurrentStatus);
