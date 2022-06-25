@@ -76,7 +76,7 @@ navigator.geolocation.getCurrentPosition(loadCurrentStatus);
 
 //Alert Function 2 & 3: Load current location via the form button
 let showHome = document.querySelector("#submit-home");
-searchCity.addEventListener("click", showCurrentStatus);
+searchCity.addEventListener("submit", showCurrentStatus);
 
 //Function 6: Connect destination with API
 function showSearchedTemperature(response) {
@@ -112,5 +112,7 @@ function submitSearchLocation(event) {
 }
 
 //Alert function 4, 5 & 6: Connect typed location with API + Show weather
-let form = document.querySelector("submit-location");
+let form = document.querySelector("location-search");
 form.addEventListener("submit", submitSearchLocation);
+
+search("Vienna");
