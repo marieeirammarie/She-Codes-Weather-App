@@ -44,12 +44,16 @@ currentTime.innerHTML = loadDate(now);
 
 // Function 2: Show current Status (Position & Weather)
 function showCurrentStatus(response) {
-  let cityName = document.querySelector("#destination");
   let currentTemperature = document.querySelector("#current-temperature");
+  let cityName = document.querySelector("#destination");
   let currentDescription = document.querySelector("#current-description");
   //let rainElement = document.querySelector("#current-rain");
   let humidityElement = document.querySelector("#current-humidity");
   let windElement = document.querySelector("#current-wind");
+  let iconElement = document.querySelector("#current-icon");
+
+  let celsiusTemperature = Math.round(response.data.main.temp);
+  currentTemperature.innerHTML = `${celsiusTemperature}`;
 
   let location = response.data.name;
   let description = response.data.weather[0].description;
@@ -57,17 +61,19 @@ function showCurrentStatus(response) {
   let humidity = Math.round(response.data.main.humidity);
   let wind = Math.round(response.data.wind.speed);
 
-  let celsiusTemperature = Math.round(response.data.main.temp);
-
   cityName.innerHTML = `${location}`;
-  currentTemperature.innerHTML = `${celsiusTemperature}`;
   currentDescription.innerHTML = `${description}`;
   //rainElement.innerHTML = `${rain}`;
   humidityElement.innerHTML = `${humidity}`;
   windElement.innerHTML = `${wind}`;
+  iconElement.setAttribute(
+    "src",
+    `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
+  iconElement.setAttribute("alt", response.data.weather[0].description);
 }
 
-// Function 3: Load current Position & Weather
+// Function 3: Load current geographical Position & Weather of user by re-loading and opening the side
 function loadCurrentStatus(position) {
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
@@ -80,37 +86,13 @@ function loadCurrentStatus(position) {
 // Alert Function 2 & 3: Load current location by re-loading the page
 navigator.geolocation.getCurrentPosition(loadCurrentStatus);
 
-//Function 6:
-function showSearchedTemperature(response) {
-  let cityName = document.querySelector("#destination");
-  let currentTemperature = document.querySelector("#current-temperature");
-  //let rainElement = document.querySelector("#current-rain");
-  let humidityElement = document.querySelector("#current-humidity");
-  let windElement = document.querySelector("#current-wind");
-
-  let location = response.data.name;
-  //let rain = Math.round(response.data.precipitation.mode);
-  let humidity = Math.round(response.data.main.humidity);
-  let wind = Math.round(response.data.wind.speed);
-
-  let celsiusTemperature = Math.round(response.data.main.temp);
-
-  cityName.innerHTML = `${location}`;
-  currentTemperature.innerHTML = `${celsiusTemperature}`;
-  //rainElement.innerHTML = `${rain}`;
-  humidityElement.innerHTML = `${humidity}`;
-  windElement.innerHTML = `${wind}`;
-}
-
-//Function 5: Connect destination with API
 function search(city) {
   let apiKey = "3b0dd576d30fcc1cc16ccaf31a91c33f";
   let apiEndpoint = `https://api.openweathermap.org/data/2.5/weather?`;
   let apiUrl = `${apiEndpoint}q=${city}&appid=${apiKey}&units=metric`;
-  axios.get(apiUrl).then(showSearchedTemperature);
+  axios.get(apiUrl).then(showCurrentStatus);
 }
 
-//Alert function 4, 5 & 6: Connect typed location with API + Show weather
 function handleSubmit(event) {
   event.preventDefault();
   let cityInputElement = document.querySelector("#input-city");
@@ -132,19 +114,20 @@ function displayCelsius(event) {
   celsiusLink.classList.add("active");
   fahrenheitLink.classList.remove("active");
   let temperatureElement = document.querySelector("#current-temperature");
-  temperatureElement.innerHTML = Math.round(celsiustemperature);
+  temperatureElement.innerHTML = Math.round(celsiusTemperature);
 }
 
+//Make a global temperature Variable to convert celisius to fahrenheit & back
 let celsiusTemperature = null;
 
-let form = document.querySelector("location-search");
+let form = document.querySelector("#location-form");
 form.addEventListener("submit", handleSubmit);
 
 //Alert function to convert temperature units
 let fahrenheitLink = document.querySelector("#fahrenheit-link");
-fahrenheit.addEventListener("click", displayFahrenheit);
+fahrenheitLink.addEventListener("click", displayFahrenheit);
 
 let celsiusLink = document.querySelector("#celsius-link");
-celsius.addEventListener("click", displayCelsius);
+celsiusLink.addEventListener("click", displayCelsius);
 
 search("Vienna");
