@@ -64,6 +64,13 @@ let currentTime = document.querySelector("#current-time");
 let now = new Date();
 currentTime.innerHTML = loadDate(now);
 
+function getForecast(coordinates) {
+  let apiKey = "3b0dd576d30fcc1cc16ccaf31a91c33f";
+  let apiEndpoint = `https://api.openweathermap.org/data/3.0/onecall?`;
+  let apiURL = `${apiEndpoint}lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiURL).then(displayForecast);
+}
+
 // Function 2: Show current Status (Position & Weather)
 function showCurrentStatus(response) {
   let currentTemperature = document.querySelector("#current-temperature");
@@ -120,6 +127,8 @@ function showCurrentStatus(response) {
     icon.setAttribute("src", "img/13d.svg");
     icon.setAttribute("alt", "snowy");
   }
+
+  getForecast(response.data.coord);
 }
 
 // Function 3: Load current geographical Position & Weather of user by re-loading and opening the side
@@ -183,5 +192,3 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsius);
 
 search("Vienna");
-
-displayForecast();
