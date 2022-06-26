@@ -37,6 +37,28 @@ function loadDate(now) {
   return `${day} –  ${date} ${month} –  ${hours} : ${minutes}`;
 }
 
+function displayForecast() {
+  let forecasteElement = document.querySelector("#forecast");
+
+  let forecastHTML = `<div class="row">`;
+  let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `<div class="roundborder col-2">
+          <div class="weather-forecast-date">${day}</div>
+          <img src="img/01d.svg" alt="sunny" width="80" />
+          <div class="weather-forecast-temperature">
+            <span class="weather-forecast-temperature-max">18°</span>
+            <span class="weather-forecast-temperature-min">12°</span>
+          </div>
+        </div>`;
+  });
+  forecastHTML = forecastHTML + `</div>`;
+
+  forecasteElement.innerHTML = forecastHTML;
+}
+
 // Alert Function 1: Load current Date & Time
 let currentTime = document.querySelector("#current-time");
 let now = new Date();
@@ -161,3 +183,5 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsius);
 
 search("Vienna");
+
+displayForecast();
