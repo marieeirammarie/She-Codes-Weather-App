@@ -46,11 +46,13 @@ currentTime.innerHTML = loadDate(now);
 function showCurrentStatus(response) {
   let cityName = document.querySelector("#destination");
   let currentTemperature = document.querySelector("#current-temperature");
+  let currentDescription = document.querySelector("#current-description");
   //let rainElement = document.querySelector("#current-rain");
   let humidityElement = document.querySelector("#current-humidity");
   let windElement = document.querySelector("#current-wind");
 
   let location = response.data.name;
+  let description = response.data.weather[0].description;
   //let rain = Math.round(response.data.precipitation.mode);
   let humidity = Math.round(response.data.main.humidity);
   let wind = Math.round(response.data.wind.speed);
@@ -59,6 +61,7 @@ function showCurrentStatus(response) {
 
   cityName.innerHTML = `${location}`;
   currentTemperature.innerHTML = `${celsiusTemperature}`;
+  currentDescription.innerHTML = `${description}`;
   //rainElement.innerHTML = `${rain}`;
   humidityElement.innerHTML = `${humidity}`;
   windElement.innerHTML = `${wind}`;
