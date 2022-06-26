@@ -37,28 +37,6 @@ function loadDate(now) {
   return `${day} –  ${date} ${month} –  ${hours} : ${minutes}`;
 }
 
-function displayForecast() {
-  let forecasteElement = document.querySelector("#forecast");
-
-  let forecastHTML = `<div class="row">`;
-  let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `<div class="roundborder col-2">
-          <div class="weather-forecast-date">${day}</div>
-          <img src="img/01d.svg" alt="sunny" width="80" />
-          <div class="weather-forecast-temperature">
-            <span class="weather-forecast-temperature-max">18°</span>
-            <span class="weather-forecast-temperature-min">12°</span>
-          </div>
-        </div>`;
-  });
-  forecastHTML = forecastHTML + `</div>`;
-
-  forecasteElement.innerHTML = forecastHTML;
-}
-
 // Alert Function 1: Load current Date & Time
 let currentTime = document.querySelector("#current-time");
 let now = new Date();
@@ -66,8 +44,7 @@ currentTime.innerHTML = loadDate(now);
 
 function getForecast(coordinates) {
   let apiKey = "3b0dd576d30fcc1cc16ccaf31a91c33f";
-  let apiEndpoint = `https://api.openweathermap.org/data/3.0/onecall?`;
-  let apiURL = `${apiEndpoint}lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  let apiURL = `https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
   axios.get(apiURL).then(displayForecast);
 }
 
@@ -129,6 +106,35 @@ function showCurrentStatus(response) {
   }
 
   getForecast(response.data.coord);
+}
+
+function displayForecast() {
+  let forecast = response.data.daily;
+  
+  let forecastElement = document.querySelector("#forecast");
+
+  let forecastHTML = `<div class="row">`;
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      forecastHTML =
+        forecastHTML +
+        `<div class="roundborder col-2">
+          <div class="weather-forecast-date">${formatDay(forecastDay.dt)}</div>
+          <img src="img/01d.svg" alt="sunny" width="80" />
+          <div class="weather-forecast-temperature">
+            <span class="weather-forecast-temperature-max">${Math.round(
+              forecastDay.temp.max
+            )}°</span>
+            <span class="weather-forecast-temperature-min">${Math.round(
+              forecastDay.temp.min
+            )}°</span>
+          </div>
+        </div>
+        `;
+    }
+  });
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
 }
 
 // Function 3: Load current geographical Position & Weather of user by re-loading and opening the side
