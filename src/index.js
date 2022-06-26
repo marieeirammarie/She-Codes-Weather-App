@@ -51,7 +51,7 @@ function showCurrentStatus(response) {
   let humidityElement = document.querySelector("#current-humidity");
   let windElement = document.querySelector("#current-wind");
 
-  let celsiusTemperature = response.data.main.temp;
+  celsiusTemperature = response.data.main.temp;
   currentTemperature.innerHTML = Math.round(celsiusTemperature);
 
   let icon = document.querySelector("#current-icon");
