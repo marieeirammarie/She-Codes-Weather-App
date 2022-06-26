@@ -50,10 +50,11 @@ function showCurrentStatus(response) {
   //let rainElement = document.querySelector("#current-rain");
   let humidityElement = document.querySelector("#current-humidity");
   let windElement = document.querySelector("#current-wind");
-  let iconElement = document.querySelector("#current-icon");
 
-  let celsiusTemperature = Math.round(response.data.main.temp);
-  currentTemperature.innerHTML = `${celsiusTemperature}`;
+  let celsiusTemperature = response.data.main.temp;
+  currentTemperature.innerHTML = Math.round(celsiusTemperature);
+
+  let icon = document.querySelector("#current-icon");
 
   let location = response.data.name;
   let description = response.data.weather[0].description;
@@ -66,11 +67,37 @@ function showCurrentStatus(response) {
   //rainElement.innerHTML = `${rain}`;
   humidityElement.innerHTML = `${humidity}`;
   windElement.innerHTML = `${wind}`;
-  iconElement.setAttribute(
-    "src",
-    `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-  );
-  iconElement.setAttribute("alt", response.data.weather[0].description);
+  if (response.data.weather[0].description === "clear sky") {
+    icon.setAttribute("src", "img/01d.svg");
+    icon.setAttribute("alt", "sunny");
+  } else if (
+    response.data.weather[0].description === "few clouds" ||
+    "scattered clouds"
+  ) {
+    icon.setAttribute("src", "img/02d.svg");
+    icon.setAttribute("alt", "cloudy");
+  } else if (
+    response.data.weather[0].description === "broken clouds" ||
+    "overcast clouds"
+  ) {
+    icon.setAttribute("src", "img/03d.svg");
+    icon.setAttribute("alt", "broken-clouds");
+  } else if (response.data.weather[0].description === "mist") {
+    icon.setAttribute("src", "img/04d.svg");
+    icon.setAttribute("alt", "mist");
+  } else if (response.data.weather[0].description === "shower rain") {
+    icon.setAttribute("src", "img/09d.svg");
+    icon.setAttribute("alt", "shower-rain");
+  } else if (response.data.weather[0].description === "rain") {
+    icon.setAttribute("src", "img/10d.svg");
+    icon.setAttribute("alt", "rainy");
+  } else if (response.data.weather[0].description === "thunderstorm") {
+    icon.setAttribute("src", "img/11d.svg");
+    icon.setAttribute("alt", "thunderstorms");
+  } else if (response.data.weather[0].description === "snow") {
+    icon.setAttribute("src", "img/13d.svg");
+    icon.setAttribute("alt", "snowy");
+  }
 }
 
 // Function 3: Load current geographical Position & Weather of user by re-loading and opening the side
@@ -105,15 +132,18 @@ function displayFahrenheit(event) {
 
   celsiusLink.classList.remove("active");
   fahrenheitLink.classList.add("active");
+
   let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
   temperature.innerHTML = Math.round(fahrenheitTemperature);
 }
 
 function displayCelsius(event) {
   event.preventDefault();
+  let temperatureElement = document.querySelector("#current-temperature");
+
   celsiusLink.classList.add("active");
   fahrenheitLink.classList.remove("active");
-  let temperatureElement = document.querySelector("#current-temperature");
+
   temperatureElement.innerHTML = Math.round(celsiusTemperature);
 }
 
