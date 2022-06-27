@@ -44,7 +44,7 @@ currentTime.innerHTML = loadDate(now);
 
 function getForecast(coordinates) {
   let apiKey = "3b0dd576d30fcc1cc16ccaf31a91c33f";
-  let apiURL = `https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  let apiURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
   axios.get(apiURL).then(displayForecast);
 }
 
@@ -108,9 +108,9 @@ function showCurrentStatus(response) {
   getForecast(response.data.coord);
 }
 
-function displayForecast() {
+function displayForecast(response) {
   let forecast = response.data.daily;
-  
+
   let forecastElement = document.querySelector("#forecast");
 
   let forecastHTML = `<div class="row">`;
