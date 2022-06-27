@@ -108,30 +108,23 @@ function showCurrentStatus(response) {
   getForecast(response.data.coord);
 }
 
-function displayForecast(response) {
-  let forecast = response.data.daily;
-
+function displayForecast() {
   let forecastElement = document.querySelector("#forecast");
 
   let forecastHTML = `<div class="row">`;
-  forecast.forEach(function (forecastDay, index) {
-    if (index < 6) {
-      forecastHTML =
-        forecastHTML +
-        `<div class="roundborder col-2">
-          <div class="weather-forecast-date">${formatDay(forecastDay.dt)}</div>
-          <img src="img/01d.svg" alt="sunny" width="80" />
+  let days = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `<div class="roundborder col-2">
+          <div class="weather-forecast-date">${day}</div>
+          <img src="" width="80" />
           <div class="weather-forecast-temperature">
-            <span class="weather-forecast-temperature-max">${Math.round(
-              forecastDay.temp.max
-            )}°</span>
-            <span class="weather-forecast-temperature-min">${Math.round(
-              forecastDay.temp.min
-            )}°</span>
+            <span class="weather-forecast-temperature-max">18°</span>
+            <span class="weather-forecast-temperature-min">18°</span>
           </div>
         </div>
         `;
-    }
   });
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
