@@ -117,20 +117,46 @@ function formatDay(timestamp) {
   return days[day];
 }
 
-function displayForecast(response) {
+
+  function displayForecast(response) {
   let forecast = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
 
   let forecastHTML = `<div class="row">`;
   forecast.forEach(function (forecastDay, index) {
     if (index < 6) {
+      let icon = "";
+      if (forecastDay.weather[0].description === "clear sky") {
+        icon = "img/01d.svg";
+      } else if (
+        forecastDay.weather[0].description === "few clouds" ||
+        "scattered clouds"
+      ) {
+        icon = "img/02d.svg";
+      } else if (
+        forecastDay.weather[0].description === "broken clouds" ||
+        "overcast clouds"
+      ) {
+        icon = "img/03d.svg";
+      } else if (forecastDay.weather[0].description === "mist") {
+        icon = "img/04d.svg";
+      } else if (forecastDay.weather[0].description === "shower rain") {
+        icon = "img/09d.svg";
+      } else if (forecastDay.weather[0].description === "rain") {
+        icon = "img/10d.svg";
+      } else if (forecastDay.weather[0].description === "thunderstorm") {
+        icon = "img/11d.svg";
+      } else if (forecastDay.weather[0].description === "snow") {
+        icon = "img/13d.svg";
+      }
+
       forecastHTML =
         forecastHTML +
         `<div class="roundborder col-2">
           <div class="weather-forecast-date">${formatDay(forecastDay.dt)}</div>
-          <img src="http://openweathermap.org/img/wn/${
-            forecastDay.weather[0].icon
-          }@2x.png" width="80" id="forecast-image"/>
+          <img src="${icon}" width="80" alr="${
+          forecastDay.weather[0].description
+        }"/>
           <div class="weather-forecast-temperature">
             <span class="weather-forecast-temperature-max">${Math.round(
               forecastDay.temp.max
@@ -146,6 +172,16 @@ function displayForecast(response) {
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
 }
+
+
+
+
+
+
+
+
+
+
 
 // Function 3: Load current geographical Position & Weather of user by re-loading and opening the side
 function loadCurrentStatus(position) {
